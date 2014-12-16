@@ -1,30 +1,33 @@
 <?php
 /* 
+  Theme Name: themefunk-wp-theme
+  Theme URI: http://netfunkdesign.com
+  Description: Themefunk for Wordpress by Phil Sanders. A Foundation 4 theme project for wordress.
+  Version: Beta 0.1.0
+  Author: Phil Sanders
+  Author URI: http://www.netfunkdesign.com
 
-	Theme Name: WP-netfunktheme 
-	Theme URI: http://netfunkdesign.com
-	Description: netfunkdesign.com Soundcloud.com Intigration.
-	Version: Beta 0.9.1
-	Author: Phil Sanders
-	Author URI: http://netfunkdesign.com
+  License: MIT
 
-	License: GPL2 
+  Copyright 2012 Phil Sanders  (email : philsanders79@gmail.com)
 
-	Copyright 2012 Phil Sanders  (email : philsanders79@gmail.com)
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License, version 2, as 
-    published by the Free Software Foundation.
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
 */
 
 /* breakculture include files  */
@@ -179,7 +182,8 @@ add_filter('wp_title', 'netfunktheme_title_blogname');
 if (!function_exists( 'netfunktheme_default_navigation')){
 	function netfunktheme_default_navigation(){
 	?><ul id="nav">
-        <li <?php if (is_front_page()) { echo " class=\"current_page_item\""; } ?>><a href="<?php echo esc_url(home_url()); ?>" title="Home">Home</a></li>				
+        <li <?php if (is_front_page()) { echo ' class="current_page_item"'; } ?>>
+          <a href="<?= esc_url(home_url()); ?>" title="Home">Home</a></li>
         <?php wp_list_pages('title_li=&sort_column=menu_order'); ?>
 	  </ul>
 	<?php
@@ -254,13 +258,15 @@ if (!function_exists( 'netfunktheme_user_menu')){
 
 <?php } else { ?>
     <?php if (class_exists('WpPhpBB')){ ?>
-        <li><a href="<?php echo home_url() ?>/forum/ucp.php?mode=register" class="signup" title="Click here to Sign-Up">Sign-Up</a></li>
+        <li><a href="<?= home_url() ?>/forum/ucp.php?mode=register" class="signup" title="Click here to Sign-Up">Sign-Up</a></li>
      <?php } else { ?>
-        <li><a href="<?php echo home_url() ?>/wp-signup.php" class="signup" title="Click here to Sign-Up">Create an Account</a></li>
+        <li><a href="<?= home_url() ?>/wp-signup.php" class="signup" title="Click here to Sign-Up">Create an Account</a></li>
      <?php }?>
      	<li class="has-dropdown"><a href="#" class="link">Sign In</a>
           <ul class="dropdown user-login-dropdown">
-            <?php netfunktheme_login_form(); ?>
+            <?php
+              netfunktheme_login_form();
+            ?>
           </ul>
         </li>
 	<?php } ?>
@@ -276,21 +282,21 @@ if (!function_exists( 'netfunktheme_user_dropdown_menu')){
 	
 	if (!function_exists( 'netfunktheme_member_edit_link')){
 	  if (!function_exists( 'netfunk_member_edit_link')){ ?>
-        <li><a href="<?php echo home_url() ?>/wp-admin/profile.php" class="members"><i class="fa fa-user"></i> &nbsp; Profile Settings</a></li>
+        <li><a href="<?= home_url() ?>/wp-admin/profile.php" class="members"><i class="fa fa-user"></i> &nbsp; Profile Settings</a></li>
 <?php }
 	} ?>
     
-    <li><a href="<?php echo home_url() ?>/wp-admin/" class="blog"><i class="fa fa-wordpress"></i> &nbsp; Control Panel</a></li>
+    <li><a href="<?= home_url() ?>/wp-admin/" class="blog"><i class="fa fa-wordpress"></i> &nbsp; Control Panel</a></li>
     
 	<?php if (class_exists('WpPhpBB')) {  
         $admin_url = wpbb_get_admin_link(); // currently logged in ?>	
-        <li><a href="<?php echo home_url() ?>/forum/ucp.php" class="forum">Forum Control Panel</a></li>
+        <li><a href="<?= home_url() ?>/forum/ucp.php" class="forum">Forum Control Panel</a></li>
         
      <?php if ( !empty( $admin_url ) )  ?>
-        <li><a href="<? echo $admin_url ?>">phpBB Administration</a></li>
+        <li><a href="<?= $admin_url ?>">phpBB Administration</a></li>
     <?php } ?>
     
-    <li><a href="<?php echo home_url() ?>/wp-login.php?action=logout&redirect_to=<?php echo home_url() ?>" class="signup" title="Click here to Log-Out">Logout</a></li>
+    <li><a href="<?= home_url() ?>/wp-login.php?action=logout&redirect_to=<?= home_url() ?>" class="signup" title="Click here to Log-Out">Logout</a></li>
 
 <?php }	
 }
@@ -401,7 +407,7 @@ function netfunktheme_get_page_number() {
 /* netfunktheme category lists */
 function netfunktheme_catz($glue) {
 	$current_cat = single_cat_title( '', false );
-	$separator = "\n";
+	$separator = '\n';
 	$cats = explode( $separator, get_the_category_list($separator) );
 	foreach ( $cats as $i => $str ) {
 		if ( strstr( $str, ">$current_cat<" ) ) {
@@ -518,7 +524,7 @@ function netfunktheme_catch_page_image($content) {
     //if (isset($matches [1][0]))
     //  $splash_img = $matches [1][0];
     if (empty($splash_img)) //Defines a default image
-      $splash_img = get_stylesheet_directory_uri() . "/images/default-splash.jpg";
+      $splash_img = get_stylesheet_directory_uri() . '/images/default-splash.jpg';
   }
 
   return $splash_img;
@@ -526,7 +532,7 @@ function netfunktheme_catch_page_image($content) {
 
 
 /* netfunktheme "smart" capture post image */
-function netfunktheme_catch_post_image($post="") {
+function netfunktheme_catch_post_image($post='') {
 
   global $post, $posts;
   $splash_img = '';
@@ -541,7 +547,7 @@ function netfunktheme_catch_post_image($post="") {
       if (isset($matches [1][0]))
           $splash_img = $matches [1][0];
       if (empty($splash_img)) //Defines a default image
-          $splash_img = get_stylesheet_directory_uri() . "/images/default-splash.jpg";
+          $splash_img = get_stylesheet_directory_uri() . '/images/default-splash.jpg';
   }
   return $splash_img;
 }
@@ -593,7 +599,7 @@ add_shortcode( 'splash', 'splash_img_callback' );
 function netfunktheme_get_pages_splash($per_page=4,$offset=0,$page_id,$height=400){
 	global $page, $pages;
 ?>
-<div class="slideshow-wrapper"<?php echo ' style="height:' . $height .'px; min-height:' . $height .'px;" ' ?>>
+<div class="slideshow-wrapper"<?= ' style="height:' . $height .'px; min-height:' . $height .'px;" ' ?>>
         <!--div class="preloader"></div-->
         <ul data-orbit data-options="
             animation:fade;
@@ -613,7 +619,7 @@ function netfunktheme_get_pages_splash($per_page=4,$offset=0,$page_id,$height=40
             $image = netfunktheme_catch_page_image( $page->post_content );
 			if ($page_id == $page->ID){
         ?>
-		<li data-orbit-slide="headline-<?php echo $n ?>" style="background-image:url('<?php echo $image ?>'); height: <?php echo $height ?>px; min-height: <?php echo $height ?>px;"> </li>
+		<li data-orbit-slide="headline-<?= $n ?>" style="background-image:url('<?= $image ?>'); height: <?= $height ?>px; min-height: <?= $height ?>px;"> </li>
     <?php
 			}
 			$n ++;
@@ -629,8 +635,8 @@ function netfunktheme_get_pages_splash($per_page=4,$offset=0,$page_id,$height=40
 function netfunktheme_get_large_featured($per_page=4,$offset=0,$category_id=0,$height=400){
 	global $post, $posts, $page, $pages;
 ?>
-<div class="slideshow-wrapper"<?php echo ' style="height:' . $height .'px; min-height:' . $height .'px;" ' ?>>
-	<div class="preloader"></div>
+<div class="slideshow-wrapper"<?= ' style="height:' . $height .'px; min-height:' . $height .'px;" ' ?>>
+	<!--div class="preloader"></div-->
     	<ul data-orbit data-options="
         animation:fade;
         animation_speed:1000;
@@ -651,12 +657,12 @@ function netfunktheme_get_large_featured($per_page=4,$offset=0,$category_id=0,$h
             $image = netfunktheme_catch_post_image();
             $content = get_the_content();
       ?>
-            <li data-orbit-slide="headline-<?php echo $n ?>" style="background-image:url('<?php echo $image ?>'); height: <?php echo $height ?>px; min-height: <?php echo $height ?>px;">
+            <li data-orbit-slide="headline-<?= $n ?>" style="background-image:url('<?= $image ?>'); height: <?= $height ?>px; min-height: <?= $height ?>px;">
                 <div class="orbit-caption">
 					<div class="row">
 						<div class="large-12">
                             <h2><?php the_title() ?></h2>
-                            <p><?php echo wp_trim_words(netfunktheme_content_strip_objects($content),30, '...') ?></p>
+                            <p><?= wp_trim_words(netfunktheme_content_strip_objects($content),30, '...') ?></p>
                             <a href="<?php the_permalink(); ?>" class="">Read More</a>
                         </div>
                     </div>
@@ -692,11 +698,11 @@ function netfunktheme_author_page_info() {
         <div class="author-description">
             <h4><?php printf( __( 'About %s', 'netfunktheme' ), get_the_author() ); ?></h4>
 			<div class="panel radius">
-            <p><?php echo $user_description1 ?></p>
-            <?php echo ($user_description2 != '' ? '<p>'.$user_description2.'</p>' : '') ?>
+            <p><?= $user_description1 ?></p>
+            <?= ($user_description2 != '' ? '<p>'.$user_description2.'</p>' : '') ?>
             <?php if (get_page_by_title('Contact Us') || get_page_by_title('Contact') || get_page_by_title('contact')){  ?>
                 <br />
-                <a href="<?php echo home_url() . '/contact/' ?>" class="button small radius success right">
+                <a href="<?= home_url() . '/contact/' ?>" class="button small radius success right">
                 <?php printf( __( ' Contact %s', 'netfunktheme' ), get_the_author() ); ?>
                 </a>
             <?php } ?>
@@ -738,7 +744,7 @@ function netfunktheme_about_the_author (){
             <div class="small-12 columns clearfix">
                 <h6>About The Author</h6>
                 <h4 class="author-title"><?php printf( __( '%s', 'netfunktheme' ), get_the_author() ); ?></h4>
-                <p><?php echo $user_description1 ?></p>
+                <p><?= $user_description1 ?></p>
 
                 <?php if (get_page_by_title('Contact Us') || get_page_by_title('Contact') || get_page_by_title('contact')){  ?>
                     <a href="<?= home_url() . '/contact/' ?>">
@@ -748,7 +754,7 @@ function netfunktheme_about_the_author (){
                     </a>
                 <?php } ?>
              </div>
-             <a href="<?php echo home_url() . '/author/'.get_the_author_meta('user_nicename',$user_id) ?>" class="button tiny round secondary right">More About the Author</a>
+             <a href="<?= home_url() . '/author/'.get_the_author_meta('user_nicename',$user_id) ?>" class="button tiny round secondary right">More About the Author</a>
         </div>
     </div>
     <br />
