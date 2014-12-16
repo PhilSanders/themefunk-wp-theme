@@ -223,7 +223,7 @@ if (!function_exists( 'netfunktheme_navigation_menu')){
 		
 		/*  menu hack to support foundation .top-bar */
 		echo '<script>
-          (function($){
+          jQuery(document).ready(function($) {
             $("#nav.left .menu-item-has-children").addClass(\'has-dropdown\');
             $("#nav.left .menu-item-has-children").addClass(\'not-click\');
             $("#nav.left .menu-item-has-children .sub-menu").addClass(\'dropdown\');
@@ -759,14 +759,11 @@ add_action('netfunktheme_about_the_author','netfunktheme_about_the_author',1,0);
 
 /* register themfunk javascript  */
 function themefunk_register_js( ){
-    //wp_dequeue_script( 'jquery');
-    //wp_deregister_script( 'jquery');
-    //wp_register_script('jquery2', get_template_directory_uri() . '/assets/js/jquery/jquery.js', array('jquery'), 'jquery', '', false);
+    wp_register_script('jquery', get_template_directory_uri() . '/assets/js/jquery/jquery.js', array('jquery'), 'jquery', '', false);
     wp_register_script('foundation', get_template_directory_uri() . '/assets/js/foundation/foundation.js', array('jquery'), 'jquery', '', false);
     wp_register_script('modernizr', get_template_directory_uri() . '/assets/js/modernizr.js', array('jquery'), 'jquery', '', false);
     wp_register_script('fastclick', get_template_directory_uri() . '/assets/js/fastclick/fastclick.js', array('jquery'), 'jquery', '', false);
-    wp_register_script('fastclick', get_template_directory_uri() . '/assets/js/fastclick/fastclick.js', array('jquery'), 'jquery', '', false);
-    //wp_enqueue_script('jquery2');
+    wp_enqueue_script('jquery');
     wp_enqueue_script('foundation');
     wp_enqueue_script('modernizr');
     wp_enqueue_script('fastclick');
@@ -778,17 +775,17 @@ add_filter( 'wp_enqueue_scripts', 'themefunk_register_js', PHP_INT_MAX );
 function netfunktheme_foundation_init() {
   if ( !is_admin() ) {
     echo "<script>
-    (function($){
+    jQuery(document).ready(function($) {
       $(document).ready(function($) {
 
-        $(document).foundation('orbit', 'reflow');
+        $(document).foundation('offcanvas', 'reflow');
 
-        /* 
-          $(window).trigger('resize');
-               var thumbWidth = $('.home-block-content a').width() - 2;
-              /$('.home-block-content .home-block-img').height(thumbWidth)
-          }); 
-        */
+        $(window).trigger('resize');
+
+            //var thumbWidth = $('.home-block-content a').width() - 2;
+            //$('.home-block-content .home-block-img').height(thumbWidth)
+       });
+
     });
   
   </script>";
