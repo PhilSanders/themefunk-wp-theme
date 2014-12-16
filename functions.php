@@ -34,14 +34,12 @@ require_once (get_template_directory() .'/includes/addons.php');
 require_once (get_template_directory() .'/includes/widgets.php');
 require_once (get_template_directory() .'/includes/shortcodes.php');
 
-
 /* breakculture themes */
 $file_paths = glob(get_template_directory() . '/layouts/*/*.php');
 
 foreach ($file_paths as $file) {
     require_once($file);
 }
-
 
 /* NetfunkTheme Config */
 if (!function_exists( 'netfunktheme_setup')){
@@ -78,10 +76,10 @@ if (!function_exists( 'netfunktheme_setup')){
 				'primary' => __( 'Main Navigation', 'netfunktheme' ),
 				'footer' => __( 'Footer Navigation', 'netfunktheme' )
 		));
+
 	}
 }
 add_action('after_setup_theme', 'netfunktheme_setup');
-
 
 /* netfunktheme theme header */
 if (!function_exists( 'netfunktheme_theme_header')){
@@ -132,27 +130,28 @@ add_action( 'after_setup_theme', 'netfunktheme_theme_header' );
 
 function netfunktheme_custom_pings($comment, $args, $depth) {
 	$GLOBALS['comment'] = $comment;
-?>
-	<li id="comment-<?php comment_ID() ?>" <?php comment_class() ?>>
-	<div class="comment-author">
-      <?php printf(__('By %1$s on %2$s at %3$s', 'netfunktheme'),
-            get_comment_author_link(),
-            get_comment_date(),
-            get_comment_time() );
-            edit_comment_link(__('Edit', 'netfunktheme'), ' <span class="meta-sep"> | </span> <span class="edit-link">', '</span>');
-      ?>
-    </div>
-	<?php 
-      if ($comment->comment_approved == '0') {
-          echo '\t\t\t\t\t<span class="unapproved">'; _e('Your trackback is awaiting moderation.', 'netfunktheme'); echo '</span>\n';
-      }
 	?>
+	
+	<li id="comment-<?php comment_ID() ?>" <?php comment_class() ?>>
+	<div class="comment-author"><?php printf(__('By %1$s on %2$s at %3$s', 'netfunktheme'),
+	
+	get_comment_author_link(),
+	get_comment_date(),
+	get_comment_time() );
+	edit_comment_link(__('Edit', 'netfunktheme'), ' <span class="meta-sep"> | </span> <span class="edit-link">', '</span>'); ?></div>
+
+	<?php 
+	if ($comment->comment_approved == '0') { 
+		echo '\t\t\t\t\t<span class="unapproved">'; _e('Your trackback is awaiting moderation.', 'netfunktheme'); echo '</span>\n'; 
+	} 
+	?>
+
     <div class="comment-content">
 		<?php comment_text() ?>
     </div>
+    
 	<?php 
 }
-
 
 /* netfunktheme page title */
 if (!function_exists( 'netfunktheme_page_title')){ 
@@ -166,14 +165,12 @@ if (!function_exists( 'netfunktheme_page_title')){
 }
 add_filter('the_title', 'netfunktheme_page_title');
 
-
 /* netfunktheme blog name */
 if (!function_exists( 'netfunktheme_title_blogname')){
 	function netfunktheme_title_blogname($title) {
 		return $title . esc_attr(get_bloginfo('name')); }
 }
 add_filter('wp_title', 'netfunktheme_title_blogname');
-
 
 /* netfunktheme default navigation menu */ 
 if (!function_exists( 'netfunktheme_default_navigation')){
@@ -187,7 +184,6 @@ if (!function_exists( 'netfunktheme_default_navigation')){
 	}
 }
 add_action('netfunktheme_default_navigation','netfunktheme_default_navigation',1,0);
-
 
 /* netfunktheme navigation menu */ 
 if (!function_exists( 'netfunktheme_navigation_menu')){
@@ -223,12 +219,11 @@ if (!function_exists( 'netfunktheme_navigation_menu')){
 		
 		/*  menu hack to support foundation .top-bar */
 		echo '<script>
-          (function($){
-            $("#nav.left .menu-item-has-children").addClass(\'has-dropdown\');
-            $("#nav.left .menu-item-has-children").addClass(\'not-click\');
-            $("#nav.left .menu-item-has-children .sub-menu").addClass(\'dropdown\');
-          });
-	    </script>';
+	    jQuery("#nav.left .menu-item-has-children").addClass(\'has-dropdown\');
+		jQuery("#nav.left .menu-item-has-children").addClass(\'not-click\');
+		jQuery("#nav.left .menu-item-has-children .sub-menu").addClass(\'dropdown\');
+	  </script>';
+		
 	}
 }
 add_action('netfunktheme_navigation_menu','netfunktheme_navigation_menu',1,0);
@@ -253,17 +248,27 @@ if (!function_exists( 'netfunktheme_user_menu')){
         </li>
 
 <?php } else { ?>
-    <?php if (class_exists('WpPhpBB')){ ?>
+
+    <?php if (class_exists('WpPhpBB')){ ?>	
+        
         <li><a href="<?php echo home_url() ?>/forum/ucp.php?mode=register" class="signup" title="Click here to Sign-Up">Sign-Up</a></li>
+    
      <?php } else { ?>
+        
         <li><a href="<?php echo home_url() ?>/wp-signup.php" class="signup" title="Click here to Sign-Up">Create an Account</a></li>
+     
      <?php }?>
+     
      	<li class="has-dropdown"><a href="#" class="link">Sign In</a>
+        
           <ul class="dropdown user-login-dropdown">
             <?php netfunktheme_login_form(); ?>
           </ul>
+        
         </li>
+	 
 	<?php } ?>
+    
     </ul><?php
 	}	
 }
@@ -295,7 +300,6 @@ if (!function_exists( 'netfunktheme_user_dropdown_menu')){
 <?php }	
 }
 add_action('netfunktheme_user_dropdown_menu','netfunktheme_user_dropdown_menu',1,0);
-
 
 /* netfunktheme top navigation login dropdown */
 function netfunktheme_login_form( $args = array() ) {
@@ -343,23 +347,27 @@ function netfunktheme_login_form( $args = array() ) {
 }
 add_action('netfunktheme_login_form','netfunktheme_login_form',1,0);
 
-
 /* netfunktheme post-type sidebar options  */
 if (!function_exists( 'netfunktheme_sidenoside')){
 /* called to determine if the theme is using sidebars on the current post type */
   function netfunktheme_sidenoside( $type ) {
-
+    
 	global $theme_options,$netfunk_page_options,$netfunk_post_options;
+	
 	$class = 'large-';
+	
 	if ($type == 'frontpage')
 	  $class .= (isset($theme_options['show_front_page_sidebar']) && $theme_options['show_front_page_sidebar'] == 'yes' ? '9' : '12');
+	  
 	else if ($type == 'page')
 	  $class .= (isset($netfunk_page_options['show_pages_sidebar']) && $netfunk_page_options['show_pages_sidebar'] == 'yes' ? '9' : '12');
+	  
 	else if ($type == 'post')
 	  $class .= (isset($netfunk_post_options['show_posts_sidebar']) && $netfunk_post_options['show_posts_sidebar'] == 'yes' ? '9' : '12');
+    
 	else
 	  $class .= '9';
-
+	
 	echo $class;
 	
   }
@@ -531,18 +539,17 @@ function netfunktheme_catch_post_image($post="") {
   ob_end_clean();
 
   if ( has_post_thumbnail() ) {
-      $image_url = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'full');
-      $splash_img = $image_url[0];
+    $image_url = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'full');
+    $splash_img = $image_url[0];
   } else {
-      $output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post->post_content, $matches);
-      if (isset($matches [1][0]))
-          $splash_img = $matches [1][0];
-      if (empty($splash_img)) //Defines a default image
-          $splash_img = get_stylesheet_directory_uri() . "/images/default-splash.jpg";
+    $output = preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $post->post_content, $matches);
+    if (isset($matches [1][0]))
+      $splash_img = $matches [1][0];
+    if (empty($splash_img)) //Defines a default image
+      $splash_img = get_stylesheet_directory_uri() . "/images/default-splash.jpg";
   }
   return $splash_img;
 }
-
 
 /* netfunktheme "smart" content stipper */
 function netfunktheme_content_strip_objects( $postOutput ) {
@@ -553,13 +560,11 @@ function netfunktheme_content_strip_objects( $postOutput ) {
    return $postOutput;
 }
 
-
 /* netfunktheme "smart" image stipper */
 function netfunktheme_remove_image( $content ) {
    $postOutput = preg_replace('/<img[^>]+./','', $content);
    return $postOutput;
 }
-
 
 /* netfunktheme "smart" length */
 function netfunktheme_get_words($text, $limit) {
@@ -572,8 +577,11 @@ function netfunktheme_get_words($text, $limit) {
 
 
 /* netfunktheme "smart" featured content */
+
 /* netfunk splash image shortcode */
+
 //add_shortcode( 'myshortcode', 'my_shortcode_handler' );  ~ helper comment
+
 function splash_img_callback( $atts, $content = null  ) {
 	extract( shortcode_atts( array(
 		'top' => 'top',
@@ -581,52 +589,77 @@ function splash_img_callback( $atts, $content = null  ) {
 	), $atts ) );
 	
 	return '<span class="splash '.$top.' '.$align.'">' . $content . '</span>';
+
 }
 add_shortcode( 'splash', 'splash_img_callback' );
 
-
 /* netfunktheme splash image disaply */
 function netfunktheme_get_pages_splash($per_page=4,$offset=0,$page_id,$height=400){
+
 	global $page, $pages;
+
 ?>
+
 <div class="slideshow-wrapper"<?php echo ' style="height:' . $height .'px; min-height:' . $height .'px;" ' ?>>
-        <!--div class="preloader"></div-->
-        <ul data-orbit data-options="
-            animation:fade;
-            animation_speed:1000;
-            pause_on_hover:false;
-            resume_on_mouseout:false;
-            slide_number:false;
-            navigation_arrows:false;
-            bullets:true;
-            variable_height:true;">
+
+	<!--div class="preloader"></div-->
+
+    	<ul data-orbit data-options="
+        animation:fade;
+        animation_speed:1000;
+        pause_on_hover:false;
+        resume_on_mouseout:false;
+        slide_number:false;
+        navigation_arrows:false;
+        bullets:true;
+        variable_height:true;">
      
         <?php
-        $mypages = get_pages();
-		$n = 1;
 
-        foreach ( $mypages as $page ) :
+        $mypages = get_pages();
+    
+		$n = 1;
+	
+        foreach ( $mypages as $page ) : 
+
             $image = netfunktheme_catch_page_image( $page->post_content );
+
 			if ($page_id == $page->ID){
+		
         ?>
+        
 		<li data-orbit-slide="headline-<?php echo $n ?>" style="background-image:url('<?php echo $image ?>'); height: <?php echo $height ?>px; min-height: <?php echo $height ?>px;"> </li>
-    <?php
+
+      	<?php 
+        
 			}
+		
 			$n ++;
+		
         endforeach; 
-    ?>
+        
+        ?>
+    
     </ul>
+
 </div>
+
 <?php
+
 }
 
 
 /* netfunktheme "smart" featured content */
 function netfunktheme_get_large_featured($per_page=4,$offset=0,$category_id=0,$height=400){
+
 	global $post, $posts, $page, $pages;
+
 ?>
+
 <div class="slideshow-wrapper"<?php echo ' style="height:' . $height .'px; min-height:' . $height .'px;" ' ?>>
+
 	<div class="preloader"></div>
+
     	<ul data-orbit data-options="
         animation:fade;
         animation_speed:1000;
@@ -638,34 +671,61 @@ function netfunktheme_get_large_featured($per_page=4,$offset=0,$category_id=0,$h
         variable_height:true;">
      
       <?php
+    
         $args = array( 'posts_per_page' => $per_page, 'offset'=> $offset, 'category' => $category_id ); // FEATURED CATEGORY - HARD CODED
+        
         $myposts = get_posts( $args );
+    
 		$n = 1;
 	
-        foreach ( $myposts as $post ) :
-			setup_postdata( $post );
+        foreach ( $myposts as $post ) : 
+		
+			setup_postdata( $post ); 
+            
             $image = netfunktheme_catch_post_image();
+        
             $content = get_the_content();
+        
       ?>
+        
             <li data-orbit-slide="headline-<?php echo $n ?>" style="background-image:url('<?php echo $image ?>'); height: <?php echo $height ?>px; min-height: <?php echo $height ?>px;">
+
                 <div class="orbit-caption">
+
 					<div class="row">
+
 						<div class="large-12">
+
                             <h2><?php the_title() ?></h2>
+            
                             <p><?php echo wp_trim_words(netfunktheme_content_strip_objects($content),30, '...') ?></p>
+        
                             <a href="<?php the_permalink(); ?>" class="">Read More</a>
+    
                         </div>
+                    
                     </div>
+
                 </div>
+
             </li>
-    <?php
-		    $n ++;
-        endforeach;
+
+      <?php 
+        
+			$n ++;
+		
+        endforeach; 
+        
         wp_reset_postdata();
-    ?>
+        
+        ?>
+    
     </ul>
+
 </div>
+
 <?php
+
 }
 
 
@@ -704,9 +764,9 @@ function netfunktheme_author_page_info() {
 }
 add_action('netfunktheme_author_page_info', 'netfunktheme_author_page_info',1,0);
 
-
 /* netfunktheme author avatar */
 function netfunktheme_author_avatar($atts){
+	
 	extract( shortcode_atts( array(
 		'user_id' => '0',
 		'size' => '96'
@@ -714,9 +774,9 @@ function netfunktheme_author_avatar($atts){
 	
 	$default = '/images/avatar.jpg';
 	echo get_avatar( $atts['user_id'], $atts['size'], $default );
+
 }
 add_action('netfunktheme_author_image','netfunktheme_author_avatar',1,1);
-
 
 /* netfunktheme about the author panel */
 function netfunktheme_about_the_author (){
@@ -725,78 +785,84 @@ function netfunktheme_about_the_author (){
 ?>
     
     <div class="panel callout hide-for-small clearfix about-author">
+
         <div class="small-12 large-2 left center-for-small netfunktheme_author_avatar">
-		    <?php do_action('netfunktheme_author_image', $atts = array('user_id'=>$user_id,'size'=>150));  ?>
+        
+		  <?php do_action('netfunktheme_author_image', $atts = array('user_id'=>$user_id,'size'=>150));  ?>
+        
         </div><!-- .author-avatar -->
-
+        
         <div class="small-12 large-10 right author-description netfunktheme_about_card">
-            <div class="small-12 columns clearfix">
-                <h6>About The Author</h6>
-                <h4 class="author-title"><?php printf( __( '%s', 'netfunktheme' ), get_the_author() ); ?></h4>
-                <p><?php echo $user_description1 ?></p>
-
-                <?php if (get_page_by_title('Contact Us') || get_page_by_title('Contact') || get_page_by_title('contact')){  ?>
-                    <a href="<?= home_url() . '/contact/' ?>">
-                    <?php
-                        printf( __( ' Contact %s', 'netfunktheme' ), get_the_author() );
-                    ?>
-                    </a>
-                <?php } ?>
-             </div>
-             <a href="<?php echo home_url() . '/author/'.get_the_author_meta('user_nicename',$user_id) ?>" class="button tiny round secondary right">More About the Author</a>
+        
+          <div class="small-12 columns clearfix">
+          
+            <h6>About The Author</h6>
+        
+            <h4 class="author-title"><?php printf( __( '%s', 'netfunktheme' ), get_the_author() ); ?></h4>
+        
+            <p><?php echo $user_description1 ?></p>
+         
+            <?php if (get_page_by_title('Contact Us') || get_page_by_title('Contact') || get_page_by_title('contact')){  ?>
+        
+                <a href="<?php echo home_url() . '/contact/' ?>">
+         
+                <?php printf( __( ' Contact %s', 'netfunktheme' ), get_the_author() ); ?>
+         
+                </a>
+         
+            <?php } ?>
+        
+           </div>
+        
+          <a href="<?php echo home_url() . '/author/'.get_the_author_meta('user_nicename',$user_id) ?>" class="button tiny round secondary right">More About the Author</a>
+      
         </div>
+  
     </div>
+    
     <br />
+ 
 <?php
 }
 add_action('netfunktheme_about_the_author','netfunktheme_about_the_author',1,0);
 
-
-/* register themfunk javascript  */
-function themefunk_register_js( ){
-    //wp_dequeue_script( 'jquery');
-    //wp_deregister_script( 'jquery');
-    //wp_register_script('jquery2', get_template_directory_uri() . '/assets/js/jquery/jquery.js', array('jquery'), 'jquery', '', false);
-    wp_register_script('foundation', get_template_directory_uri() . '/assets/js/foundation/foundation.js', array('jquery'), 'jquery', '', false);
-    wp_register_script('modernizr', get_template_directory_uri() . '/assets/js/modernizr.js', array('jquery'), 'jquery', '', false);
-    wp_register_script('fastclick', get_template_directory_uri() . '/assets/js/fastclick/fastclick.js', array('jquery'), 'jquery', '', false);
-    wp_register_script('fastclick', get_template_directory_uri() . '/assets/js/fastclick/fastclick.js', array('jquery'), 'jquery', '', false);
-    //wp_enqueue_script('jquery2');
-    wp_enqueue_script('foundation');
-    wp_enqueue_script('modernizr');
-    wp_enqueue_script('fastclick');
+/* register netfunktheme javascript  */
+function  netfunktheme_register_js() {
+	if (!is_admin()) {
+		wp_register_script('foundation-script', get_template_directory_uri() . '/includes/foundation-5.3.0/js/foundation.min.js', array('jquery'), 'jquery', '', false);
+		wp_register_script('modernizr-script', get_template_directory_uri() . '/includes/foundation-5.3.0/js/vendor/modernizr.js', array('jquery'), 'jquery', '', false);
+		wp_register_script('fastclick-script', get_template_directory_uri() . '/includes/foundation-5.3.0/js/vendor/fastclick.js', array('jquery'), 'jquery', '', false);
+		wp_enqueue_script('jquery');
+		wp_enqueue_script('foundation-script');
+		wp_enqueue_script('modernizr-script');
+		wp_enqueue_script('fastclick-script');
+	}
 }
-add_filter( 'wp_enqueue_scripts', 'themefunk_register_js', PHP_INT_MAX );
-
+add_action('wp_enqueue_scripts', 'netfunktheme_register_js');
 
 /* Init Foundation 5 */
 function netfunktheme_foundation_init() {
   if ( !is_admin() ) {
-    echo '<script>
-    (function($){
-      $(document).ready(function($) {
-
-        $(document).foundation();
-
-        $(window).trigger("resize");
-
-         // var thumbWidth = $(".home-block-content a").width() - 2;
-         // $(".home-block-content .home-block-img").height(thumbWidth)
-
-      });
-    });
+    echo '<script> jQuery(document).foundation();
+	
+	jQuery(document).ready(function($) {
+      $(window).trigger("resize");
+	 
+	   // var thumbWidth = $(".home-block-content a").width() - 2;
+	  // $(".home-block-content .home-block-img").height(thumbWidth)
+	
+    }); 
   
   </script>';
   }
 }
 add_action( 'wp_footer', 'netfunktheme_foundation_init');
 
-
 /* netfunktheme custom javascript (header) */
 if (!function_exists( 'netfunktheme_custom_javascript_top')){
 	function netfunktheme_custom_javascript_top() {
 		global $script_options;
-		if (!empty($script_options['javascript_top']))
+		if (isset($script_options['javascript_top']))
 		echo '<script type="text/javascript">'
 		. $script_options['javascript_top']
 		. '</script>';
@@ -804,12 +870,11 @@ if (!function_exists( 'netfunktheme_custom_javascript_top')){
 }
 add_action('wp_head', 'netfunktheme_custom_javascript_top');
 
-
 /* netfunktheme custom javascript (footer) */
 if (!function_exists( 'netfunktheme_custom_javascript_bottom')){
 	function netfunktheme_custom_javascript_bottom() {
 		global $script_options;
-		if (!empty($script_options['javascript_bottom']))
+		if (isset($script_options['javascript_bottom']))
 		echo '<script type="text/javascript">'
 		. $script_options['javascript_bottom']
 		. '</script>';
@@ -817,42 +882,52 @@ if (!function_exists( 'netfunktheme_custom_javascript_bottom')){
 }
 add_action('wp_footer', 'netfunktheme_custom_javascript_bottom');
 
-
 /* register netfunktheme style sheets  */
 function netfunktheme_theme_styles() {
-    wp_register_style( 'normalize', get_template_directory_uri() . '/assets/css/foundation/normalize.css' );
-	wp_register_style( 'foundation', get_template_directory_uri(). '/assets/css/foundation/foundation.css' );
-	wp_register_style( 'fontawesome', get_template_directory_uri() . '/assets/css/fontawesome/font-awesome.css' );
-	//wp_register_style( 'webicons', get_template_directory_uri() . '/css/webicons.css' );
+	wp_register_style( 'normalize', get_template_directory_uri() . '/includes/foundation-5.3.0/css/normalize.css' );
+	wp_register_style( 'foundation', get_template_directory_uri(). '/includes/foundation-5.3.0/css/foundation.css' );
+	//wp_register_style( 'superfish', get_template_directory_uri() . '/css/superfish.css' );
+	wp_register_style( 'font-awesome', get_template_directory_uri() . '/css/font-awesome.min.css' );
+	wp_register_style( 'web-icons', get_template_directory_uri() . '/css/webicons.css' );
+	wp_register_style( 'web-fonts', get_template_directory_uri() . '/css/fonts/stylesheet.css' );
+	
 	wp_enqueue_style( 'normalize' );
 	wp_enqueue_style( 'foundation' );
-	wp_enqueue_style( 'fontawesome' );
-	//wp_enqueue_style( 'webicons' );
+	//wp_enqueue_style( 'superfish' );
+	wp_enqueue_style( 'font-awesome' );
+	wp_enqueue_style( 'web-icons' );
+	wp_enqueue_style( 'web-fonts' );
 }
 add_action('wp_print_styles', 'netfunktheme_theme_styles');
 
 
 /* register netfunktheme css  */
 function netfunktheme_theme_css() {
-	wp_register_style( 'netfunktheme-style', get_stylesheet_uri() );
-	wp_enqueue_style( 'netfunktheme-style' );
+	wp_register_style( 'netfunktheme-css', get_stylesheet_uri() );
+	wp_enqueue_style( 'netfunktheme-css' );
 	
 }
 add_action('wp_print_styles', 'netfunktheme_theme_css');
+
+/* register netfunk-funkinfamily user.css  */
+function netfunktheme_user_styles() {
+	wp_register_style( 'netfunktheme-user-css', get_stylesheet_directory_uri() . '/css/user.css' );
+	wp_enqueue_style( 'netfunktheme-user-css' );
+}
+add_action('wp_print_styles', 'netfunktheme_user_styles');
 
 
 /* netfunktheme cutom css action */
 if (!function_exists( 'netfunktheme_custom_css')){
 	function netfunktheme_custom_css() {
 		global $script_options;
-		if (!empty($script_options['custom_css']))
+		if (isset($script_options['custom_css']))
 		echo '<style type="text/css">'
 		. $script_options['custom_css']
 		. '</style>';
 	}
 }
 add_action('wp_head', 'netfunktheme_custom_css');
-
 
 /* register netfunktheme widgets (widgets.php) */
 function netfunktheme_widgets_addon() {
@@ -863,9 +938,9 @@ function netfunktheme_widgets_addon() {
 }
 add_action('widgets_init', 'netfunktheme_widgets_addon', 1);
 
-
 /* register netfunktheme sidebars */
 function netfunktheme_widgets_init() {
+	
 	// LEFT SIDEBAR
 	register_sidebar( array(
 		'name' => __( 'Primary Sidebar', 'netfunktheme' ),
@@ -891,6 +966,7 @@ function netfunktheme_widgets_init() {
 		'after_widget' => '</li>',
 		'before_title' => '<h3 class="widget-title">',
 		'after_title' => '</h3>',));
+	
 	// CONTENT SIDEBARS
 	register_sidebar( array(
 		'name' => __( 'Front Page Content Widgets', 'netfunktheme' ),
@@ -908,6 +984,8 @@ function netfunktheme_widgets_init() {
 		'after_widget' => '</div>',
 		'before_title' => '<h2 class="widget-title">',
 		'after_title' => '</h2>',));
+	
+	
 	// FOOTER SIDEBARS
 	register_sidebar( array(
 		'name' => __( 'Footer Widget Area', 'netfunktheme' ),
@@ -919,5 +997,7 @@ function netfunktheme_widgets_init() {
 		'after_title' => '</h3>',));
 }
 add_action( 'widgets_init', 'netfunktheme_widgets_init' );
+
+
 
 // EOF
