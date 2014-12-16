@@ -1,0 +1,37 @@
+@charset "utf-8";
+/* CSS Document */
+
+.soundcloud-integration { padding-top: 40px!important;}
+
+#soundcloud-connect-widget { 
+	width: 100%!important;
+	margin: 20px 0px 10px 1px!important; 
+	border-radius: 5px; 
+	-webkit-border-radius: 5px; 
+	border: 1px #fc750f solid!important; 
+	padding: 10px!important;
+	background: #000;
+	overflow:hidden;
+}
+
+#soundcloud-connect-widget .soundcloud_connect { margin: 0px auto; } 
+#soundcloud-connect-widget img.soundcloud_connect { margin: 10px auto 0px; } 
+#soundcloud-connect-widget .widgettitle { 
+	text-align: 	center;
+	letter-spacing: -1px;
+	font-size:		16px;
+	background: 	#fc750f; 
+	color: 			#FFF; 
+	padding: 		10px 10px 10px; 
+	margin: 		-10px -10px 10px; 
+	width: 			auto; 
+	border-bottom: 	1px #fc750f solid; 
+
+}
+#soundcloud-connect-widget ul { padding: 0px; margin: 0px -10px!important; }
+#soundcloud-connect-widget li { padding: 0px; margin: 0px!important; }
+#soundcloud-connect-widget a { color: inherit; display: block; text-align: center; padding: 10px 15px; margin: 0px; border-bottom: 1px #333 solid; }
+#soundcloud-connect-widget a:hover { color: #fc750f; }
+
+
+#soundcloud_disconnect_form { margin: 0px; padding: 20px 0px;}
