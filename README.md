@@ -1,4 +1,4 @@
-netfunktheme
+PhilSanders
 ============
 
-NetfunkTheme for Wordpress by NetfunkDesign. Responsive foundation framework theme build project.
+Themefunk for Wordpress by Phil Sanders. A Foundation 4 theme project for wordress.
